@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('mahasiswas', MahasiswaController::class);
-// Route::get('mahasiswas/cari', [App\Http\Controllers\MahasiswaController::class, 'cari'])->name('cari');
+Route::get('cari', [App\Http\Controllers\MahasiswaController::class, 'cari'])->name('mahasiswas.cari');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

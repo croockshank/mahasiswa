@@ -9,12 +9,12 @@
             <div class="float-left">
                 <form action="{{ route('mahasiswas.index') }}" method="GET" role="search">
                     <div class="input-group">
+                        <input type="text" class="form-control mr-2" name="term" placeholder="Search Nama Mahasiswa" id="term">
                         <span class="input-group-btn mr-5 mt-1">
                             <button class="btn btn-info" type="submit" title="Search Mahasiswa">
                                 <span class="fas fa-search">Search</span>
                             </button>
                         </span>
-                        <input type="text" class="form-control mr-2" name="term" placeholder="Search Nama Mahasiswa" id="term">
                         <a href="{{ route('mahasiswas.index') }}" class=" mt-1">
                             <span class="input-group-btn">
                                 <button class="btn btn-danger" type="button" title="Refresh page">
@@ -67,4 +67,7 @@
     @endforeach
 
 </table>
+<div class="d-flex">
+    {{ $mahasiswas->appends(request()->term)->links('pagination::bootstrap-4') }}
+</div>
 @endsection

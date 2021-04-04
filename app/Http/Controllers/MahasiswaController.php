@@ -14,7 +14,7 @@ class MahasiswaController extends Controller
      */
     public function index(Request $request)
     {
-        $Mahasiswa = Mahasiswa::where([
+        $mahasiswas = Mahasiswa::where([
             ['Nama', '!=', Null],
             [function ($query) use ($request) {
                 if (($term = $request->term)) {
@@ -23,10 +23,8 @@ class MahasiswaController extends Controller
             }]
         ])
             ->orderBy('Nim', 'desc')
-            ->simplePaginate(5);
-        //fungsi eloquent menampilkan data menggunakan pagination
-        $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
-        $posts = Mahasiswa::orderBy('Nim', 'asc')->paginate(6);
+            ->paginate(5); //Komentar kalau mau pake function cari
+        // $mahasiswas = Mahasiswa::all(); // Hapus komentar kalo mau pake function cari
         return view('mahasiswas.index', compact('mahasiswas'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -118,12 +116,11 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswas.index')
             ->with('success', 'Mahasiswa Berhasil Dihapus');
     }
-    // public function cari(Request $request, $Mahasiswa)
-    // {
-    //     $cari = $request->cari;
 
-    //     $Mahasiswa = Mahasiswa::where('Nama', 'LIKE', '%' . $cari . '%')->get()->paginate(5);
+    public function cari($term)
+    {
+        $mahasiswas = Mahasiswa::where('Nama', 'LIKE', '%' . $term . '%')->paginate(5);
 
-    //     return view('mahasiswas.index', ['mahasiswa' => $Mahasiswa]);
-    // }
+        return view('mahasiswas.index', compact('mahasiswas'));
+    }
 }
